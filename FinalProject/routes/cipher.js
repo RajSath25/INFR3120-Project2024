@@ -8,7 +8,7 @@ let cipher = require("../model/cipher");
 router.get('/', async(req, res, next) => {
     try{
         const Cipher = await cipher.find()
-        res.render("Cipher/list", {title: "Actor List", cipherList: Cipher});
+        res.render("Cipher/list", {title: "Cipher List", cipherList: Cipher});
     }
     catch (err)
     {
@@ -33,12 +33,12 @@ router.get("/add",async(req,res,next)=>{
 
 router.post("/add", async(req,res,next)=>{
     try {
+        let id = req.params.id;
         let newCipher = cipher({
             "firstname":req.body.firstname,
             "lastname":req.body.lastname,
             "plaintext":req.body.plaintext,
-            "key":req.body.key,
-            "encryption":req.body.encryption
+            "key":req.body.key
         })
         cipher.create(newCipher).then(()=>{
             res.redirect("/cipher")
