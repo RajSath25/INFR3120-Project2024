@@ -11,8 +11,4 @@ router.get('/home', function(req, res, next) {
 });
 
 
-router.get('/cipher', function(req, res, next) {
-  res.render("index", {title: "Cipher"});
-});
-
 module.exports = router;
