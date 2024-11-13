@@ -25,6 +25,16 @@
                             <td class="text-center"><%= cipherList[count].lastname %></td>
                             <td class="text-center"><%= cipherList[count].plaintext %></td>
                             <td class="text-center"><%= cipherList[count].key %></td>
+
+                            <td class="text-center col-1">
+                                <a href="/cipher/edit/<%= cipherList[count]._id%>"
+                                class="btn btn-primary btn-sm">
+                                <i class="fas fa-pencil-alt"></i>Edit</a></td>
+
+                            <td class="text-center col-1">
+                                <a href="/cipher/delete/ <%= cipherList[count]._id %>"
+                                class="btn btn-danger btn-sm">
+                                <i class="fas fa-trash-alt"></i>Delete</a></td>
                         </tr>
                     <% } %>
                 </table>
@@ -34,7 +44,8 @@
 </main>
 
 <script>
-    function caesarCipher(plainText, key) 
+    
+    function caesarCipher2(plainText, key) 
     {  
         let result = ""; 
         for (let i = 0; i < plainText.length; i++) {    
@@ -68,12 +79,15 @@
         let plaintext = rows.cells[2].innerText;
         let key = parseInt(rows.cells[3].innerText);
 
-        let cipherText = caesarCipher(plaintext,key)
+        let cipherText = caesarCipher2(plaintext,key)
 
         let cipherTextCell = rows.insertCell(4);
         cipherTextCell.innerText = cipherText;
     }
 </script>
+
+
+
 
 <%- include ../Partials/bottom_nav.ejs %>  
     

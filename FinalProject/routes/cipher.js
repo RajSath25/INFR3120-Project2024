@@ -52,5 +52,58 @@ router.post("/add", async(req,res,next)=>{
     }
 });
 
+router.get("/edit/:id", async(req,res,next)=>{
+    try {
+        const id = req.params.id;
+        const CipherToEdit = await cipher.findById(id);
+        res.render("Cipher/edit", {
+            title: "Edit Cipher Entry",
+            cipher: CipherToEdit
+        })
+    } 
+    catch (err) {
+        console.error(err)
+        next(err);
+    }
+});
+
+
+router.post("/edit/:id", async(req,res,next)=>{
+    try {
+        let id = req.params.id;
+        let updatedCipher = cipher({
+            "_id":id,
+            "firstname":req.body.firstname,
+            "lastname":req.body.lastname,
+            "plaintext":req.body.plaintext,
+            "key":req.body.key,
+        })
+        cipher.findByIdAndUpdate(id,updatedCipher).then(()=>{
+            res.redirect("/cipher");
+        })
+    } 
+    catch (err) {
+        console.error(err)
+        res.render("Cipher/list", {
+            error: "Error on server"
+        }) 
+    }
+});
+
+router.get('/delete/:id',async(req,res,next)=>{
+    try{
+        let id=req.params.id;
+        cipher.deleteOne({}).then(()=>{
+            res.redirect('/cipher')
+        })
+    }
+    catch(error){
+        console.error(err);
+        res.render('Cipher/list',{
+            error:'Error on the server'
+        })
+    }
+});
+
 
   module.exports = router;
